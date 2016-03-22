@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.15" />
+
+  <title>API-Step 1 Design first &middot; Pour le plaisir du code</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="http://pamyot.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="http://pamyot.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="http://pamyot.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="Pour le plaisir du code" href="http://pamyot.github.io/index.xml" />
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="http://pamyot.github.io/img/favicon.ico" type="image/x-icon" />
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="http://pamyot.github.io/">PA</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://pamyot.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://pamyot.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://pamyot.github.io/index.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+    </li>
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/PascalAmyot" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://linkedin.com/in/pascal-amyot-a5096225" target="_blank"><i class="fa fa-linkedin-square fa-fw"></i>LinkedIn</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/pamyot" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div class="pure-g">
+  <div class="small-print pure-u-1 pure-u-md-1-1">
+    <small>&copy; 2016 Pascal Amyot. All rights reserved.</small>
+  </div>
+  <div class="small-print pure-u-1 pure-u-md-1-1">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>API-Step 1 Design first</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>12 Mar 2016, 07:23</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  
+
+</div>
+
+  
+
+<p>To build my first API, I will use a design first approach.</p>
+
+<h2 id="why-design-first:05198e0a9765efc8697bcfdd80086b5f">Why design first ?</h2>
+
+<p>My background as a software architect leads me naturally to opt for a design first approach.</p>
+
+<p>I googled a little bit to confirm that the design first approach still applies in an Agile and API world (we never know) :</p>
+
+<ul>
+<li>Excellent presentation from <a href="http://www.infoq.com/presentations/api-design-first">Jason Harmon</a> or similar on <a href="http://fr.slideshare.net/JasonHarmon1">slideshare</a></li>
+<li><a href="http://apievangelist.com/2014/08/11/what-is-an-api-first-strategy-adding-some-dimensions-to-this-new-question/">API Evangelist</a></li>
+<li><a href="http://apigee.com/about/blog/developer/design-first-approach-building-apis-swagger">apigee</a></li>
+</ul>
+
+<h2 id="use-case:05198e0a9765efc8697bcfdd80086b5f">Use case</h2>
+
+<p>The use case that will be used for the first API will be based on a flash word learning technic that is used for <a href="http://homeschoolingwithdyslexia.com/how-to-teach-sight-words-dyslexia/">kids with dyslexia</a>.
+For the first API, I will only build an API that allows to do CRUD operation on a word list:</p>
+
+<ul>
+<li>Create, Update or Delete a word list.</li>
+<li>Get a word list.</li>
+</ul>
+
+<p>I know the operations are rather basic for now, but I want to start small and I&rsquo;ll add more later.</p>
+
+<h2 id="tools:05198e0a9765efc8697bcfdd80086b5f">Tools</h2>
+
+<p>I&rsquo;ll use the <a href="http://swagger.io/">Swagger</a> format to design the API and store it on <a href="https://swaggerhub.com">Swagger Hub</a>.</p>
+
+<h2 id="designing-the-api:05198e0a9765efc8697bcfdd80086b5f">Designing the API</h2>
+
+<p>The swagger editor is nice but it doesn&rsquo;t help in creating a valid YAML document.  To create my API, I add
+to go to the <a href="http://swagger.io/specification/">OPENAPI SPECIFICATION</a> reference page and I refered to
+another example that a had written last year to test the swagger specification.</p>
+
+<h3 id="designing-the-entities:05198e0a9765efc8697bcfdd80086b5f">Designing the entities</h3>
+
+<p>I started by defining my entities required for my API.</p>
+
+<script src="//gist.github.com/pamyot/6b4d3f6b17ec1647c416.js"></script>
+
+<h3 id="reusable-parameters:05198e0a9765efc8697bcfdd80086b5f">Reusable parameters</h3>
+
+<p>I have the wordListID parameter that is used in a few places so I created a parameter for that.</p>
+
+<script src="//gist.github.com/pamyot/3091576d6c1f70b96b6a.js"></script>
+
+<h3 id="create-the-required-verbs:05198e0a9765efc8697bcfdd80086b5f">Create the required verbs</h3>
+
+<p>The final step was to create the verbs required to implement my API.</p>
+
+<script src="//gist.github.com/pamyot/41fb243f2d16352848ef.js"></script>
+
+<h2 id="the-api:05198e0a9765efc8697bcfdd80086b5f">The API</h2>
+
+<p>You can explore the complete <a href="https://swaggerhub.com/api/pamyot/words/V0.1">Words API</a> on swaggerHub.</p>
+
+<h2 id="intuitive-and-easy:05198e0a9765efc8697bcfdd80086b5f">Intuitive and easy</h2>
+
+<p>This first step was easy to do and I the swagger format helped me in designing a simple and clear API to be used.</p>
+
+<h2 id="see-also:05198e0a9765efc8697bcfdd80086b5f">See also</h2>
+
+<ul>
+<li><a href="http://pamyot.github.io/post/first-api-project/">My first API projet</a><br /></li>
+</ul>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1 pure-u-md-1-2">
+    
+    <nav class="prev">
+      <a href="http://pamyot.github.io/post/first-api-project/"><i class="fa fa-arrow-circle-left fa-fw fa-lg"></i>My first API project</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1 pure-u-md-1-2">
+    
+  </div>
+</div>
+
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'pamyot';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="http://pamyot.github.io/js/ui.js"></script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-74900834-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</body>
+</html>
+
