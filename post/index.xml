@@ -6,8 +6,104 @@
     <description>Recent content in Posts on Pour le plaisir du code</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&amp;copy; 2016 Pascal Amyot. All rights reserved.</copyright>
-    <lastBuildDate>Sat, 12 Mar 2016 07:23:45 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 22 Mar 2016 10:28:24 -0400</lastBuildDate>
     <atom:link href="http://pamyot.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>API-Step 2 - Starting the loopback implementation (part 1)</title>
+      <link>http://pamyot.github.io/post/api-loopback-part-1/</link>
+      <pubDate>Tue, 22 Mar 2016 10:28:24 -0400</pubDate>
+      
+      <guid>http://pamyot.github.io/post/api-loopback-part-1/</guid>
+      <description>
+
+&lt;p&gt;Now that my &lt;a href=&#34;http://pamyot.github.io/post/first-api-design_first/&#34;&gt;design&lt;/a&gt; as been done with the swagger format, I&amp;rsquo;ll start the coding with &lt;a href=&#34;http://loopback.io/&#34;&gt;LoopBack&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;apigee-127:4323dfd6c4695a5fc1481e909e479670&#34;&gt;Apigee-127&lt;/h2&gt;
+
+&lt;p&gt;Before deciding to use loopback, my first attempt was with &lt;a href=&#34;https://github.com/apigee-127/a127-documentation/wiki/What-is-Apigee-127&#34;&gt;Apigee-127&lt;/a&gt;.  The framework
+was easy to use until I realized that while the &lt;a href=&#34;http://microservices.io/patterns/apigateway.html&#34;&gt;API Gateway&lt;/a&gt; is written using
+pure node.js code, the &lt;a href=&#34;https://github.com/apigee-127/a127-documentation/wiki/Quick-Start:-Download-and-Start-Usergrid&#34;&gt;favorite choice&lt;/a&gt; of implementation is
+the &lt;a href=&#34;http://usergrid.apache.org/&#34;&gt;apache usergrid&lt;/a&gt; BaaS Framework.&lt;/p&gt;
+
+&lt;p&gt;Since apache usergrid is writting in Java EE stack and not a pure node.js implementation I have to eliminate it.&lt;/p&gt;
+
+&lt;h2 id=&#34;feathers-2-0:4323dfd6c4695a5fc1481e909e479670&#34;&gt;Feathers 2.0&lt;/h2&gt;
+
+&lt;p&gt;After that, I tried the &lt;a href=&#34;https://www.gitbook.com/book/feathersjs/feathers-docs/details&#34;&gt;feathers 2.0&lt;/a&gt; framework.  Very
+modular, the framework is writting using pure node.js code. After searching a little bit on the internet and
+the slack channel for the framework, I didn&amp;rsquo;t find any hooks that can bridge the swagger 2.0 yaml format
+to the service implementation.   The people working to build this framework were very kind in answering my questions.&lt;/p&gt;
+
+&lt;p&gt;I found it difficult to find examples and to write a complete working API with it.  I&amp;rsquo;m not a node expert too so I stopped my
+exploration for now but I promise to go back and give it a try later.&lt;/p&gt;
+
+&lt;h2 id=&#34;loopback:4323dfd6c4695a5fc1481e909e479670&#34;&gt;Loopback&lt;/h2&gt;
+
+&lt;p&gt;The loopback framework is well documented and as a lot of examples available, easier to start with than Apigee-127 and
+Feathers 2.0 so I started with this one (on my third try).&lt;/p&gt;
+
+&lt;h3 id=&#34;creating-the-application:4323dfd6c4695a5fc1481e909e479670&#34;&gt;Creating the application&lt;/h3&gt;
+
+&lt;p&gt;Creating the application was easy :&lt;/p&gt;
+
+
+&lt;img class=&#34;pure-img&#34; src=&#34;http://pamyot.github.io/img/api-loopback/api_create_app.png&#34; alt=&#34;&#34;&gt;
+
+
+&lt;h3 id=&#34;generating-a-model-based-on-my-swagger-definition:4323dfd6c4695a5fc1481e909e479670&#34;&gt;Generating a model based on my swagger definition&lt;/h3&gt;
+
+&lt;p&gt;The built-in &lt;a href=&#34;https://docs.strongloop.com/display/public/LB/Swagger+generator&#34;&gt;Swagger generator&lt;/a&gt; makes it easy to do the job.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;ve made a local copy of my swagger definition in the &lt;code&gt;api&lt;/code&gt; directory of my project with the name &lt;code&gt;words-swagger.yaml&lt;/code&gt; and generated the model :&lt;/p&gt;
+
+
+&lt;img class=&#34;pure-img&#34; src=&#34;http://pamyot.github.io/img/api-loopback/api-swagger-generator.png&#34; alt=&#34;&#34;&gt;
+
+
+&lt;h3 id=&#34;running-the-project:4323dfd6c4695a5fc1481e909e479670&#34;&gt;Running the project&lt;/h3&gt;
+
+&lt;p&gt;The included generator as a little bug in the version that I used :&lt;/p&gt;
+
+
+&lt;img class=&#34;pure-img&#34; src=&#34;http://pamyot.github.io/img/api-loopback/api-generator-error.png&#34; alt=&#34;&#34;&gt;
+
+
+&lt;p&gt;The same bug appeared at a few places that I fixed easily.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-generated-api:4323dfd6c4695a5fc1481e909e479670&#34;&gt;The generated API&lt;/h3&gt;
+
+&lt;p&gt;My swagger definition included a model and a list of API that I created to have some basics CRUD operations on my model. I
+ didn&amp;rsquo;t realize when I used the &lt;code&gt;swagger-generator&lt;/code&gt; that it had the capacity to automatically generator the CRUD operations so I
+ ended up with two sets of API.&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;swagger_v1&lt;/strong&gt; API :&lt;/p&gt;
+
+
+&lt;img class=&#34;pure-img&#34; src=&#34;http://pamyot.github.io/img/api-loopback/api-swagger-v1.png&#34; alt=&#34;&#34;&gt;
+
+
+&lt;p&gt;The &lt;strong&gt;WordList&lt;/strong&gt; API :&lt;/p&gt;
+
+
+&lt;img class=&#34;pure-img&#34; src=&#34;http://pamyot.github.io/img/api-loopback/api-wordlist.png&#34; alt=&#34;&#34;&gt;
+
+
+&lt;h2 id=&#34;my-first-learning:4323dfd6c4695a5fc1481e909e479670&#34;&gt;My first learning&lt;/h2&gt;
+
+&lt;p&gt;I&amp;rsquo;ve learned an interesting feature about the loopback framework and the swagger format.  Since we have the ability to
+define a model, there is not added value in defining the API for some basics CRUD operations.&lt;/p&gt;
+
+&lt;p&gt;I will modify my swagger format to reflect that and continue on my API project.&lt;/p&gt;
+
+&lt;h2 id=&#34;see-also:4323dfd6c4695a5fc1481e909e479670&#34;&gt;See also&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://pamyot.github.io/post/first-api-project/&#34;&gt;My first API projet&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://pamyot.github.io/post/first-api-design_first/&#34;&gt;API-Step 1 Design first&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>API-Step 1 Design first</title>

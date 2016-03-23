@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.15" />
 
-  <title>API-Step 1 Design first &middot; Pour le plaisir du code</title>
+  <title>API-Step 2 - Starting the loopback implementation (part 1) &middot; Pour le plaisir du code</title>
 
   
   
@@ -167,7 +167,7 @@
 
 
 <div class="header">
-  <h1>API-Step 1 Design first</h1>
+  <h1>API-Step 2 - Starting the loopback implementation (part 1)</h1>
   <h2></h2>
 </div>
 <div class="content">
@@ -176,7 +176,7 @@
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>12 Mar 2016, 07:23</time>
+    <time>22 Mar 2016, 10:28</time>
   </div>
 
   
@@ -184,80 +184,95 @@
   
 
   
-  
-  
-  
 
 </div>
 
   
 
-<p>To build my first API, I will use a design first approach.</p>
+<p>Now that my <a href="http://pamyot.github.io/post/first-api-design_first/">design</a> as been done with the swagger format, I&rsquo;ll start the coding with <a href="http://loopback.io/">LoopBack</a>.</p>
 
-<h2 id="why-design-first:05198e0a9765efc8697bcfdd80086b5f">Why design first ?</h2>
+<h2 id="apigee-127:4323dfd6c4695a5fc1481e909e479670">Apigee-127</h2>
 
-<p>My background as a software architect leads me naturally to opt for a design first approach.</p>
+<p>Before deciding to use loopback, my first attempt was with <a href="https://github.com/apigee-127/a127-documentation/wiki/What-is-Apigee-127">Apigee-127</a>.  The framework
+was easy to use until I realized that while the <a href="http://microservices.io/patterns/apigateway.html">API Gateway</a> is written using
+pure node.js code, the <a href="https://github.com/apigee-127/a127-documentation/wiki/Quick-Start:-Download-and-Start-Usergrid">favorite choice</a> of implementation is
+the <a href="http://usergrid.apache.org/">apache usergrid</a> BaaS Framework.</p>
 
-<p>I googled a little bit to confirm that the design first approach still applies in an Agile and API world (we never know) :</p>
+<p>Since apache usergrid is writting in Java EE stack and not a pure node.js implementation I have to eliminate it.</p>
 
-<ul>
-<li>Excellent presentation from <a href="http://www.infoq.com/presentations/api-design-first">Jason Harmon</a> or similar on <a href="http://fr.slideshare.net/JasonHarmon1">slideshare</a></li>
-<li><a href="http://apievangelist.com/2014/08/11/what-is-an-api-first-strategy-adding-some-dimensions-to-this-new-question/">API Evangelist</a></li>
-<li><a href="http://apigee.com/about/blog/developer/design-first-approach-building-apis-swagger">apigee</a></li>
-</ul>
+<h2 id="feathers-2-0:4323dfd6c4695a5fc1481e909e479670">Feathers 2.0</h2>
 
-<h2 id="use-case:05198e0a9765efc8697bcfdd80086b5f">Use case</h2>
+<p>After that, I tried the <a href="https://www.gitbook.com/book/feathersjs/feathers-docs/details">feathers 2.0</a> framework.  Very
+modular, the framework is writting using pure node.js code. After searching a little bit on the internet and
+the slack channel for the framework, I didn&rsquo;t find any hooks that can bridge the swagger 2.0 yaml format
+to the service implementation.   The people working to build this framework were very kind in answering my questions.</p>
 
-<p>The use case that will be used for the first API will be based on a flash word learning technic that is used for <a href="http://homeschoolingwithdyslexia.com/how-to-teach-sight-words-dyslexia/">kids with dyslexia</a>.
-For the first API, I will only build an API that allows to do CRUD operation on a word list:</p>
+<p>I found it difficult to find examples and to write a complete working API with it.  I&rsquo;m not a node expert too so I stopped my
+exploration for now but I promise to go back and give it a try later.</p>
 
-<ul>
-<li>Create, Update or Delete a word list.</li>
-<li>Get a word list.</li>
-</ul>
+<h2 id="loopback:4323dfd6c4695a5fc1481e909e479670">Loopback</h2>
 
-<p>I know the operations are rather basic for now, but I want to start small and I&rsquo;ll add more later.</p>
+<p>The loopback framework is well documented and as a lot of examples available, easier to start with than Apigee-127 and
+Feathers 2.0 so I started with this one (on my third try).</p>
 
-<h2 id="tools:05198e0a9765efc8697bcfdd80086b5f">Tools</h2>
+<h3 id="creating-the-application:4323dfd6c4695a5fc1481e909e479670">Creating the application</h3>
 
-<p>I&rsquo;ll use the <a href="http://swagger.io/">Swagger</a> format to design the API and store it on <a href="https://swaggerhub.com">Swagger Hub</a>.</p>
+<p>Creating the application was easy :</p>
 
-<h2 id="designing-the-api:05198e0a9765efc8697bcfdd80086b5f">Designing the API</h2>
 
-<p>The swagger editor is nice but it doesn&rsquo;t help in creating a valid YAML document.  To create my API, I add
-to go to the <a href="http://swagger.io/specification/">OPENAPI SPECIFICATION</a> reference page and I refered to
-another example that a had written last year to test the swagger specification.</p>
+<img class="pure-img" src="http://pamyot.github.io/img/api-loopback/api_create_app.png" alt="">
 
-<h3 id="designing-the-entities:05198e0a9765efc8697bcfdd80086b5f">Designing the entities</h3>
 
-<p>I started by defining my entities required for my API.</p>
+<h3 id="generating-a-model-based-on-my-swagger-definition:4323dfd6c4695a5fc1481e909e479670">Generating a model based on my swagger definition</h3>
 
-<script src="//gist.github.com/pamyot/6b4d3f6b17ec1647c416.js"></script>
+<p>The built-in <a href="https://docs.strongloop.com/display/public/LB/Swagger+generator">Swagger generator</a> makes it easy to do the job.</p>
 
-<h3 id="reusable-parameters:05198e0a9765efc8697bcfdd80086b5f">Reusable parameters</h3>
+<p>I&rsquo;ve made a local copy of my swagger definition in the <code>api</code> directory of my project with the name <code>words-swagger.yaml</code> and generated the model :</p>
 
-<p>I have the wordListID parameter that is used in a few places so I created a parameter for that.</p>
 
-<script src="//gist.github.com/pamyot/3091576d6c1f70b96b6a.js"></script>
+<img class="pure-img" src="http://pamyot.github.io/img/api-loopback/api-swagger-generator.png" alt="">
 
-<h3 id="create-the-required-verbs:05198e0a9765efc8697bcfdd80086b5f">Create the required verbs</h3>
 
-<p>The final step was to create the verbs required to implement my API.</p>
+<h3 id="running-the-project:4323dfd6c4695a5fc1481e909e479670">Running the project</h3>
 
-<script src="//gist.github.com/pamyot/41fb243f2d16352848ef.js"></script>
+<p>The included generator as a little bug in the version that I used :</p>
 
-<h2 id="the-api:05198e0a9765efc8697bcfdd80086b5f">The API</h2>
 
-<p>You can explore the complete <a href="https://swaggerhub.com/api/pamyot/words/V0.1">Words API</a> on swaggerHub.</p>
+<img class="pure-img" src="http://pamyot.github.io/img/api-loopback/api-generator-error.png" alt="">
 
-<h2 id="intuitive-and-easy:05198e0a9765efc8697bcfdd80086b5f">Intuitive and easy</h2>
 
-<p>This first step was easy to do and I the swagger format helped me in designing a simple and clear API to be used.</p>
+<p>The same bug appeared at a few places that I fixed easily.</p>
 
-<h2 id="see-also:05198e0a9765efc8697bcfdd80086b5f">See also</h2>
+<h3 id="the-generated-api:4323dfd6c4695a5fc1481e909e479670">The generated API</h3>
+
+<p>My swagger definition included a model and a list of API that I created to have some basics CRUD operations on my model. I
+ didn&rsquo;t realize when I used the <code>swagger-generator</code> that it had the capacity to automatically generator the CRUD operations so I
+ ended up with two sets of API.</p>
+
+<p>The <strong>swagger_v1</strong> API :</p>
+
+
+<img class="pure-img" src="http://pamyot.github.io/img/api-loopback/api-swagger-v1.png" alt="">
+
+
+<p>The <strong>WordList</strong> API :</p>
+
+
+<img class="pure-img" src="http://pamyot.github.io/img/api-loopback/api-wordlist.png" alt="">
+
+
+<h2 id="my-first-learning:4323dfd6c4695a5fc1481e909e479670">My first learning</h2>
+
+<p>I&rsquo;ve learned an interesting feature about the loopback framework and the swagger format.  Since we have the ability to
+define a model, there is not added value in defining the API for some basics CRUD operations.</p>
+
+<p>I will modify my swagger format to reflect that and continue on my API project.</p>
+
+<h2 id="see-also:4323dfd6c4695a5fc1481e909e479670">See also</h2>
 
 <ul>
 <li><a href="http://pamyot.github.io/post/first-api-project/">My first API projet</a><br /></li>
+<li><a href="http://pamyot.github.io/post/first-api-design_first/">API-Step 1 Design first</a><br /></li>
 </ul>
 
 
@@ -266,15 +281,11 @@ another example that a had written last year to test the swagger specification.<
   <div class="pure-u-1 pure-u-md-1-2">
     
     <nav class="prev">
-      <a href="http://pamyot.github.io/post/first-api-project/"><i class="fa fa-arrow-circle-left fa-fw fa-lg"></i>My first API project</a>
+      <a href="http://pamyot.github.io/post/first-api-design_first/"><i class="fa fa-arrow-circle-left fa-fw fa-lg"></i>API-Step 1 Design first</a>
     </nav>
     
   </div>
   <div class="pure-u-1 pure-u-md-1-2">
-    
-    <nav class="next">
-      <a href="http://pamyot.github.io/post/api-loopback-part-1/">API-Step 2 - Starting the loopback implementation (part 1)<i class="fa fa-arrow-circle-right fa-fw fa-lg"></i></a>
-    </nav>
     
   </div>
 </div>
