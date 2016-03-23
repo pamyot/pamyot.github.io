@@ -74,7 +74,7 @@ Feathers 2.0 so I started with this one (on my third try).&lt;/p&gt;
 &lt;h3 id=&#34;the-generated-api:4323dfd6c4695a5fc1481e909e479670&#34;&gt;The generated API&lt;/h3&gt;
 
 &lt;p&gt;My swagger definition included a model and a list of API that I created to have some basics CRUD operations on my model. I
- didn&amp;rsquo;t realize when I used the &lt;code&gt;swagger-generator&lt;/code&gt; that it had the capacity to automatically generator the CRUD operations so I
+ didn&amp;rsquo;t realize when I used the &lt;code&gt;swagger-generator&lt;/code&gt; that it had the capacity to automatically generate the CRUD operations so I
  ended up with two sets of API.&lt;/p&gt;
 
 &lt;p&gt;The &lt;strong&gt;swagger_v1&lt;/strong&gt; API :&lt;/p&gt;
