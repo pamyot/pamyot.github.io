@@ -6,8 +6,56 @@
     <description>Recent content in Posts on Pour le plaisir du code</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&amp;copy; 2016 Pascal Amyot. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 22 Mar 2016 10:28:24 -0400</lastBuildDate>
+    <lastBuildDate>Wed, 23 Mar 2016 12:36:19 -0400</lastBuildDate>
     <atom:link href="http://pamyot.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Can the loopback opensource framework still live now that IBM as bought Strongloop?</title>
+      <link>http://pamyot.github.io/post/loopback-ibm-open-source/</link>
+      <pubDate>Wed, 23 Mar 2016 12:36:19 -0400</pubDate>
+      
+      <guid>http://pamyot.github.io/post/loopback-ibm-open-source/</guid>
+      <description>
+
+&lt;h2 id=&#34;this-history:784528718e3966774d7379a4fe02eeba&#34;&gt;This history&lt;/h2&gt;
+
+&lt;p&gt;In 2015, IBM as &lt;a href=&#34;http://www-03.ibm.com/press/us/en/pressrelease/47577.wss&#34;&gt;bought&lt;/a&gt; &lt;a href=&#34;https://strongloop.com/&#34;&gt;Strongloop&lt;/a&gt;, the company
+ behind the &lt;a href=&#34;http://loopback.io/&#34;&gt;loopback.io&lt;/a&gt; API framework.&lt;/p&gt;
+
+&lt;p&gt;During the last months, I&amp;rsquo;ve been looking at all the framework and products that are available
+to build an API based solutions.&lt;/p&gt;
+
+&lt;p&gt;Some framework/products are Opensource (ex: &lt;a href=&#34;https://openapis.org/&#34;&gt;OpenAPI&lt;/a&gt;, &lt;a href=&#34;http://restify.com/&#34;&gt;restify&lt;/a&gt; and &lt;a href=&#34;https://www.gitbook.com/book/feathersjs/feathers-docs/details&#34;&gt;Feathers&lt;/a&gt;),
+others not (ex: &lt;a href=&#34;https://aws.amazon.com/fr/api-gateway/&#34;&gt;Amazon API Gateway&lt;/a&gt;) and many are in between (ex: &lt;a href=&#34;http://apigee.com/about/&#34;&gt;Apigee&lt;/a&gt;, &lt;a href=&#34;https://strongloop.com/&#34;&gt;Strongloop&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;As a developer, I see a big advantage in using an opensource framework and I don&amp;rsquo;t want a vendor lock-in
+during the lifespan of my solution.&lt;/p&gt;
+
+&lt;p&gt;A few days ago, I started my exploration on building my first API based software using only Opensource
+software.  Loopback as been my selected framework as it is hosted on &lt;a href=&#34;https://github.com/strongloop/loopback&#34;&gt;Github&lt;/a&gt;
+and is released under a MIT license.&lt;/p&gt;
+
+&lt;h2 id=&#34;why-an-ibm-publicity-on-the-front-page-of-the-loopback-framework:784528718e3966774d7379a4fe02eeba&#34;&gt;Why an IBM publicity on the front page of the loopback framework ?&lt;/h2&gt;
+
+&lt;p&gt;This morning I had a big surprise when I visited the &lt;a href=&#34;http://loopback.io/&#34;&gt;loopback.io&lt;/a&gt; home page :&lt;/p&gt;
+
+
+&lt;img class=&#34;pure-img&#34; src=&#34;http://pamyot.github.io/img/api-loopback/loopback-ibm-api-pub.png&#34; alt=&#34;&#34;&gt;
+
+
+&lt;p&gt;Yes, it is a &lt;strong&gt;big IBM publicity&lt;/strong&gt; for the new IBM API connect!  How is that possible ?
+The reason is really simple, while the software is released under a MIT license, all the major contributors
+building the framework are working for the Strongloop/IBM corporation.&lt;/p&gt;
+
+&lt;h2 id=&#34;what-will-be-the-future-of-the-loopback-framework:784528718e3966774d7379a4fe02eeba&#34;&gt;What will be the future of the loopback framework ?&lt;/h2&gt;
+
+&lt;p&gt;I don&amp;rsquo;t want to guess if the framework will work at full capacity when it is hosted on &lt;a href=&#34;https://azure.microsoft.com/&#34;&gt;Microsoft Azure&lt;/a&gt;,
+ &lt;a href=&#34;https://www.openshift.com/&#34;&gt;Openshift&lt;/a&gt; and not the &lt;a href=&#34;http://www.ibm.com/cloud-computing/bluemix/&#34;&gt;IBM Bluemix&lt;/a&gt;
+ cloud solution.&lt;/p&gt;
+
+&lt;p&gt;Only the future can tell, am I right to be afraid ?&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>API-Step 2 - Starting the loopback implementation (part 1)</title>

@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.15" />
 
-  <title>Pour le plaisir du code</title>
+  <title>Can the loopback opensource framework still live now that IBM as bought Strongloop? &middot; Pour le plaisir du code</title>
 
   
   
@@ -167,17 +167,12 @@
 
 
 <div class="header">
-  <h1>Pour le plaisir du code</h1>
-  <h2>Accro de la techno!</h2>
+  <h1>Can the loopback opensource framework still live now that IBM as bought Strongloop?</h1>
+  <h2></h2>
 </div>
-
 <div class="content">
-  
-    <article>
-  <header>
-    <h2><a href="http://pamyot.github.io/post/loopback-ibm-open-source/">Can the loopback opensource framework still live now that IBM as bought Strongloop?</a></h2>
 
-    <div class="post-meta">
+  <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
@@ -192,124 +187,81 @@
 
 </div>
 
-  </header>
+  
 
-  <p>
-  This history In 2015, IBM as bought Strongloop, the company behind the loopback.io API framework. During the last months, I&rsquo;ve been looking at all the framework and products that are available to build an API based solutions. Some framework/products are Opensource (ex: OpenAPI, restify and Feathers), others not (ex: Amazon API Gateway) and many are in between (ex: Apigee, Strongloop). As a developer, I see a big advantage in using an opensource framework and I don&rsquo;t want a vendor lock-in during the lifespan of my solution.
-  </p>
+<h2 id="this-history:784528718e3966774d7379a4fe02eeba">This history</h2>
+
+<p>In 2015, IBM as <a href="http://www-03.ibm.com/press/us/en/pressrelease/47577.wss">bought</a> <a href="https://strongloop.com/">Strongloop</a>, the company
+ behind the <a href="http://loopback.io/">loopback.io</a> API framework.</p>
+
+<p>During the last months, I&rsquo;ve been looking at all the framework and products that are available
+to build an API based solutions.</p>
+
+<p>Some framework/products are Opensource (ex: <a href="https://openapis.org/">OpenAPI</a>, <a href="http://restify.com/">restify</a> and <a href="https://www.gitbook.com/book/feathersjs/feathers-docs/details">Feathers</a>),
+others not (ex: <a href="https://aws.amazon.com/fr/api-gateway/">Amazon API Gateway</a>) and many are in between (ex: <a href="http://apigee.com/about/">Apigee</a>, <a href="https://strongloop.com/">Strongloop</a>).</p>
+
+<p>As a developer, I see a big advantage in using an opensource framework and I don&rsquo;t want a vendor lock-in
+during the lifespan of my solution.</p>
+
+<p>A few days ago, I started my exploration on building my first API based software using only Opensource
+software.  Loopback as been my selected framework as it is hosted on <a href="https://github.com/strongloop/loopback">Github</a>
+and is released under a MIT license.</p>
+
+<h2 id="why-an-ibm-publicity-on-the-front-page-of-the-loopback-framework:784528718e3966774d7379a4fe02eeba">Why an IBM publicity on the front page of the loopback framework ?</h2>
+
+<p>This morning I had a big surprise when I visited the <a href="http://loopback.io/">loopback.io</a> home page :</p>
+
+
+<img class="pure-img" src="http://pamyot.github.io/img/api-loopback/loopback-ibm-api-pub.png" alt="">
+
+
+<p>Yes, it is a <strong>big IBM publicity</strong> for the new IBM API connect!  How is that possible ?
+The reason is really simple, while the software is released under a MIT license, all the major contributors
+building the framework are working for the Strongloop/IBM corporation.</p>
+
+<h2 id="what-will-be-the-future-of-the-loopback-framework:784528718e3966774d7379a4fe02eeba">What will be the future of the loopback framework ?</h2>
+
+<p>I don&rsquo;t want to guess if the framework will work at full capacity when it is hosted on <a href="https://azure.microsoft.com/">Microsoft Azure</a>,
+ <a href="https://www.openshift.com/">Openshift</a> and not the <a href="http://www.ibm.com/cloud-computing/bluemix/">IBM Bluemix</a>
+ cloud solution.</p>
+
+<p>Only the future can tell, am I right to be afraid ?</p>
+
 
   
-  <footer>
-    <a href="http://pamyot.github.io/post/loopback-ibm-open-source/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-    <article>
-  <header>
-    <h2><a href="http://pamyot.github.io/post/api-loopback-part-1/">API-Step 2 - Starting the loopback implementation (part 1)</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>22 Mar 2016, 10:28</time>
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1 pure-u-md-1-2">
+    
+    <nav class="prev">
+      <a href="http://pamyot.github.io/post/api-loopback-part-1/"><i class="fa fa-arrow-circle-left fa-fw fa-lg"></i>API-Step 2 - Starting the loopback implementation (part 1)</a>
+    </nav>
+    
   </div>
-
-  
-
-  
-
-  
-
+  <div class="pure-u-1 pure-u-md-1-2">
+    
+  </div>
 </div>
 
-  </header>
 
-  <p>
-  Now that my design as been done with the swagger format, I&rsquo;ll start the coding with LoopBack. Apigee-127 Before deciding to use loopback, my first attempt was with Apigee-127. The framework was easy to use until I realized that while the API Gateway is written using pure node.js code, the favorite choice of implementation is the apache usergrid BaaS Framework. Since apache usergrid is writting in Java EE stack and not a pure node.js implementation I have to eliminate it.
-  </p>
 
   
-  <footer>
-    <a href="http://pamyot.github.io/post/api-loopback-part-1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
 
-  
-    <article>
-  <header>
-    <h2><a href="http://pamyot.github.io/post/first-api-design_first/">API-Step 1 Design first</a></h2>
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
 
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>12 Mar 2016, 07:23</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  To build my first API, I will use a design first approach. Why design first ? My background as a software architect leads me naturally to opt for a design first approach. I googled a little bit to confirm that the design first approach still applies in an Agile and API world (we never know) : Excellent presentation from Jason Harmon or similar on slideshare API Evangelist apigee Use case The use case that will be used for the first API will be based on a flash word learning technic that is used for kids with dyslexia.
-  </p>
-
-  
-  <footer>
-    <a href="http://pamyot.github.io/post/first-api-design_first/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-    <article>
-  <header>
-    <h2><a href="http://pamyot.github.io/post/first-api-project/">My first API project</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>07 Mar 2016, 10:21</time>
-  </div>
-
-  
-
-  
-
-  
-
-</div>
-
-  </header>
-
-  <p>
-  The start of my exploration on API&rsquo;s. Why? The objective of the exercise is to better understand the different issues surrounding the implementation of modern solutions based on a deployable cloud API architecture. Platform selection Many platforms exist, see API Evangelist - August 2015 To limit the choice, I&rsquo;ll select the platform based on some personal criteria : Available in open source on Github BaaS platform or compatible with a BaaS Fullstack Javascript Stable release Github - Release Finalists I retain the following platforms in my initial experimentation : apigee via a127 LoopBack sails restify My personal setup To build my first projet, I will use the Microsoft code editor on an Asus UX305C portable computer.
-  </p>
-
-  
-  <footer>
-    <a href="http://pamyot.github.io/post/first-api-project/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-
-  
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'pamyot';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
 </div>
