@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.15" />
 
-  <title>Can the loopback opensource framework still live now that IBM as bought Strongloop? &middot; Pour le plaisir du code</title>
+  <title>API-Step 2 - Loopback implementation (part 2) - Connecting to a MongoDB database &middot; Pour le plaisir du code</title>
 
   
   
@@ -167,7 +167,7 @@
 
 
 <div class="header">
-  <h1>Can the loopback opensource framework still live now that IBM as bought Strongloop?</h1>
+  <h1>API-Step 2 - Loopback implementation (part 2) - Connecting to a MongoDB database</h1>
   <h2></h2>
 </div>
 <div class="content">
@@ -176,7 +176,7 @@
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>23 Mar 2016, 12:36</time>
+    <time>25 Mar 2016, 15:12</time>
   </div>
 
   
@@ -189,43 +189,126 @@
 
   
 
-<h2 id="the-history:784528718e3966774d7379a4fe02eeba">The history</h2>
+<p>In this post, I will connect the generated API (see <a href="http://pamyot.github.io/post/api-loopback-part-1">Part 1</a>) to my
+local MongoDB database and correct some errors that I&rsquo;ve done on my swagger definition.</p>
 
-<p>In 2015, IBM as <a href="http://www-03.ibm.com/press/us/en/pressrelease/47577.wss">bought</a> <a href="https://strongloop.com/">Strongloop</a>, the company
- behind the <a href="http://loopback.io/">loopback.io</a> API framework.</p>
+<h2 id="fixing-the-swagger-api-definition:d7c6f0a1214af8e314776c1ec13f091e">Fixing the swagger API definition</h2>
 
-<p>During the last months, I&rsquo;ve been looking at all the framework and products that are available
-to build an API based solutions.</p>
+<p>In my <a href="https://swaggerhub.com/api/pamyot/words/V0.1">V0.1</a> <code>WordList</code> definition, the <code>id</code> field was defined as a <code>String</code> :</p>
 
-<p>Some framework/products are Opensource (ex: <a href="https://openapis.org/">OpenAPI</a>, <a href="http://restify.com/">restify</a> and <a href="https://www.gitbook.com/book/feathersjs/feathers-docs/details">Feathers</a>),
-others not (ex: <a href="https://aws.amazon.com/fr/api-gateway/">Amazon API Gateway</a>) and many are in between (ex: <a href="http://apigee.com/about/">Apigee</a>, <a href="https://strongloop.com/">Strongloop</a>).</p>
+<pre><code>WordList:
+  type: &quot;object&quot;
+  properties:
+    id:
+      type: &quot;string&quot;
+      title: &quot;Word list ID&quot;
+    words:
+      type: &quot;array&quot;
+      title: &quot;Words&quot;
+      items:
+        $ref: &quot;#/definitions/Word&quot;
+</code></pre>
 
-<p>As a developer, I see a big advantage in using an opensource framework and I don&rsquo;t want a vendor lock-in
-during the lifespan of my solution.</p>
+<p>This won&rsquo;t work as the <code>id</code> field is expected to be an <code>integer</code> field.  The new <a href="https://swaggerhub.com/api/pamyot/words/V0.2">V0.2</a>
+definition looks like this :</p>
 
-<p>A few days ago, I started my exploration on building my first API based software using only Opensource
-software.  Loopback as been my selected framework as it is hosted on <a href="https://github.com/strongloop/loopback">Github</a>
-and is released under a MIT license.</p>
+<pre><code>WordList:
+  type: object
+  properties:
+    id:
+      type: integer
+      format: int64
+      title: Word list ID
+    words:
+      type: array
+      title: Words
+      items:
+        $ref: '#/definitions/Word'
+</code></pre>
 
-<h2 id="why-an-ibm-publicity-on-the-front-page-of-the-loopback-framework:784528718e3966774d7379a4fe02eeba">Why an IBM publicity on the front page of the loopback framework ?</h2>
+<p>I also removed some <code>paths</code> entries that are no longer required but didn&rsquo;t find a way to remove them all
+without having SwaggerHub reporting en error.</p>
 
-<p>This morning I had a big surprise when I visited the <a href="http://loopback.io/">loopback.io</a> home page :</p>
+<h2 id="swagger-generator:d7c6f0a1214af8e314776c1ec13f091e">Swagger generator</h2>
+
+<p>Since I modified my model, I ran the swagger generator again (after deleting the previous model).  The
+generator ended with an error but it still worked :</p>
 
 
-<img class="pure-img" src="http://pamyot.github.io/img/api-loopback/loopback-ibm-api-pub.png" alt="">
+<img class="pure-img" src="http://pamyot.github.io/img/api-loopback/api-swagger-generator-v0.2.png" alt="">
 
 
-<p>Yes, it is a <strong>big IBM publicity</strong> for the new IBM API connect!  How is that possible ?
-The reason is really simple, while the software is released under a MIT license, all the major contributors
-building the framework are working for the Strongloop/IBM corporation.</p>
+<h2 id="adding-the-mongodb-datasource:d7c6f0a1214af8e314776c1ec13f091e">Adding the MongoDB datasource</h2>
 
-<h2 id="what-will-be-the-future-of-the-loopback-framework:784528718e3966774d7379a4fe02eeba">What will be the future of the loopback framework ?</h2>
+<p>The next step is to configure the datasource to my local MongoDB database (installation is not shown here).
+Instead of running the generator, you can manually configure the database in the <strong>datasources.json</strong> file :</p>
 
-<p>I don&rsquo;t want to guess if the framework will work at full capacity when it is hosted on <a href="https://azure.microsoft.com/">Microsoft Azure</a>,
- <a href="https://www.openshift.com/">Openshift</a> and not the <a href="http://www.ibm.com/cloud-computing/bluemix/">IBM Bluemix</a>
- cloud solution.</p>
+<pre><code>  &quot;learn&quot;: {
+    &quot;host&quot;: &quot;127.0.0.1&quot;,
+    &quot;port&quot;: 27017,
+    &quot;database&quot;: &quot;learn_db&quot;,
+    &quot;password&quot;: &quot;&quot;,
+    &quot;name&quot;: &quot;learn&quot;,
+    &quot;user&quot;: &quot;&quot;,
+    &quot;connector&quot;: &quot;mongodb&quot;
+  }
+</code></pre>
 
-<p>Only the future can tell, am I right to be afraid ?</p>
+<h2 id="connecting-the-model-to-the-datasource:d7c6f0a1214af8e314776c1ec13f091e">Connecting the model to the datasource</h2>
+
+<p>The step is really is easy, I only had to change to configuration in the <strong>model-config.json</strong> file :</p>
+
+<pre><code>  &quot;WordList&quot;: {
+    &quot;dataSource&quot;: &quot;learn&quot;,
+    &quot;public&quot;: true
+  }
+</code></pre>
+
+<h2 id="testing-my-api:d7c6f0a1214af8e314776c1ec13f091e">Testing my API</h2>
+
+<p>It&rsquo;s now time to test my new API and see if it works.  I will do this using the built-in
+API explorer :</p>
+
+<pre><code>http://localhost:3000/explorer/#/
+</code></pre>
+
+<p>I will add a new WordList.  Leaving the <code>id</code> field empty will let MongoDB generate a new <code>objectID</code> :</p>
+
+<pre><code>curl -X POST --header &quot;Content-Type: application/json&quot; --header &quot;Accept: application/json&quot; -d &quot;{
+  \&quot;words\&quot;: [
+    \&quot;requin\&quot;,
+    \&quot;poisson\&quot;
+  ]
+}&quot; &quot;http://localhost:3000/api/WordLists&quot;
+</code></pre>
+
+<p>The response body :</p>
+
+<pre><code>{
+  &quot;id&quot;: &quot;56f58cc02dd5c18421bf03e5&quot;,
+  &quot;words&quot;: [
+    &quot;requin&quot;,
+    &quot;poisson&quot;
+  ]
+}
+</code></pre>
+
+<p>I did a check on the mongoDB command line :</p>
+
+<pre><code>C:\dev\learn&gt;mongo
+MongoDB shell version: 3.2.0
+connecting to: test
+&gt; use learn_db
+switched to db learn_db
+&gt; db.WordList.find()
+{ &quot;_id&quot; : ObjectId(&quot;56f58cc02dd5c18421bf03e5&quot;), &quot;words&quot; : [ &quot;requin&quot;, &quot;poisson&quot; ] }
+&gt;
+</code></pre>
+
+<h2 id="next-step:d7c6f0a1214af8e314776c1ec13f091e">Next step</h2>
+
+<p>I found the exercise really easy to do and didn&rsquo;t have to write much code to do this.  The next
+step will be to add some security to this API.</p>
 
 
   
@@ -233,15 +316,11 @@ building the framework are working for the Strongloop/IBM corporation.</p>
   <div class="pure-u-1 pure-u-md-1-2">
     
     <nav class="prev">
-      <a href="http://pamyot.github.io/post/api-loopback-part-1/"><i class="fa fa-arrow-circle-left fa-fw fa-lg"></i>API-Step 2 - Starting the loopback implementation (part 1)</a>
+      <a href="http://pamyot.github.io/post/loopback-ibm-open-source/"><i class="fa fa-arrow-circle-left fa-fw fa-lg"></i>Can the loopback opensource framework still live now that IBM as bought Strongloop?</a>
     </nav>
     
   </div>
   <div class="pure-u-1 pure-u-md-1-2">
-    
-    <nav class="next">
-      <a href="http://pamyot.github.io/post/api-loopback-part-2/">API-Step 2 - Loopback implementation (part 2) - Connecting to a MongoDB database<i class="fa fa-arrow-circle-right fa-fw fa-lg"></i></a>
-    </nav>
     
   </div>
 </div>

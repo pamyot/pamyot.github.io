@@ -6,8 +6,139 @@
     <description>Recent content in Posts on Pour le plaisir du code</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&amp;copy; 2016 Pascal Amyot. All rights reserved.</copyright>
-    <lastBuildDate>Wed, 23 Mar 2016 12:36:19 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 25 Mar 2016 15:12:22 -0400</lastBuildDate>
     <atom:link href="http://pamyot.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>API-Step 2 - Loopback implementation (part 2) - Connecting to a MongoDB database</title>
+      <link>http://pamyot.github.io/post/api-loopback-part-2/</link>
+      <pubDate>Fri, 25 Mar 2016 15:12:22 -0400</pubDate>
+      
+      <guid>http://pamyot.github.io/post/api-loopback-part-2/</guid>
+      <description>
+
+&lt;p&gt;In this post, I will connect the generated API (see &lt;a href=&#34;http://pamyot.github.io/post/api-loopback-part-1&#34;&gt;Part 1&lt;/a&gt;) to my
+local MongoDB database and correct some errors that I&amp;rsquo;ve done on my swagger definition.&lt;/p&gt;
+
+&lt;h2 id=&#34;fixing-the-swagger-api-definition:d7c6f0a1214af8e314776c1ec13f091e&#34;&gt;Fixing the swagger API definition&lt;/h2&gt;
+
+&lt;p&gt;In my &lt;a href=&#34;https://swaggerhub.com/api/pamyot/words/V0.1&#34;&gt;V0.1&lt;/a&gt; &lt;code&gt;WordList&lt;/code&gt; definition, the &lt;code&gt;id&lt;/code&gt; field was defined as a &lt;code&gt;String&lt;/code&gt; :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;WordList:
+  type: &amp;quot;object&amp;quot;
+  properties:
+    id:
+      type: &amp;quot;string&amp;quot;
+      title: &amp;quot;Word list ID&amp;quot;
+    words:
+      type: &amp;quot;array&amp;quot;
+      title: &amp;quot;Words&amp;quot;
+      items:
+        $ref: &amp;quot;#/definitions/Word&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This won&amp;rsquo;t work as the &lt;code&gt;id&lt;/code&gt; field is expected to be an &lt;code&gt;integer&lt;/code&gt; field.  The new &lt;a href=&#34;https://swaggerhub.com/api/pamyot/words/V0.2&#34;&gt;V0.2&lt;/a&gt;
+definition looks like this :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;WordList:
+  type: object
+  properties:
+    id:
+      type: integer
+      format: int64
+      title: Word list ID
+    words:
+      type: array
+      title: Words
+      items:
+        $ref: &#39;#/definitions/Word&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I also removed some &lt;code&gt;paths&lt;/code&gt; entries that are no longer required but didn&amp;rsquo;t find a way to remove them all
+without having SwaggerHub reporting en error.&lt;/p&gt;
+
+&lt;h2 id=&#34;swagger-generator:d7c6f0a1214af8e314776c1ec13f091e&#34;&gt;Swagger generator&lt;/h2&gt;
+
+&lt;p&gt;Since I modified my model, I ran the swagger generator again (after deleting the previous model).  The
+generator ended with an error but it still worked :&lt;/p&gt;
+
+
+&lt;img class=&#34;pure-img&#34; src=&#34;http://pamyot.github.io/img/api-loopback/api-swagger-generator-v0.2.png&#34; alt=&#34;&#34;&gt;
+
+
+&lt;h2 id=&#34;adding-the-mongodb-datasource:d7c6f0a1214af8e314776c1ec13f091e&#34;&gt;Adding the MongoDB datasource&lt;/h2&gt;
+
+&lt;p&gt;The next step is to configure the datasource to my local MongoDB database (installation is not shown here).
+Instead of running the generator, you can manually configure the database in the &lt;strong&gt;datasources.json&lt;/strong&gt; file :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  &amp;quot;learn&amp;quot;: {
+    &amp;quot;host&amp;quot;: &amp;quot;127.0.0.1&amp;quot;,
+    &amp;quot;port&amp;quot;: 27017,
+    &amp;quot;database&amp;quot;: &amp;quot;learn_db&amp;quot;,
+    &amp;quot;password&amp;quot;: &amp;quot;&amp;quot;,
+    &amp;quot;name&amp;quot;: &amp;quot;learn&amp;quot;,
+    &amp;quot;user&amp;quot;: &amp;quot;&amp;quot;,
+    &amp;quot;connector&amp;quot;: &amp;quot;mongodb&amp;quot;
+  }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;connecting-the-model-to-the-datasource:d7c6f0a1214af8e314776c1ec13f091e&#34;&gt;Connecting the model to the datasource&lt;/h2&gt;
+
+&lt;p&gt;The step is really is easy, I only had to change to configuration in the &lt;strong&gt;model-config.json&lt;/strong&gt; file :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  &amp;quot;WordList&amp;quot;: {
+    &amp;quot;dataSource&amp;quot;: &amp;quot;learn&amp;quot;,
+    &amp;quot;public&amp;quot;: true
+  }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;testing-my-api:d7c6f0a1214af8e314776c1ec13f091e&#34;&gt;Testing my API&lt;/h2&gt;
+
+&lt;p&gt;It&amp;rsquo;s now time to test my new API and see if it works.  I will do this using the built-in
+API explorer :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;http://localhost:3000/explorer/#/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I will add a new WordList.  Leaving the &lt;code&gt;id&lt;/code&gt; field empty will let MongoDB generate a new &lt;code&gt;objectID&lt;/code&gt; :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;curl -X POST --header &amp;quot;Content-Type: application/json&amp;quot; --header &amp;quot;Accept: application/json&amp;quot; -d &amp;quot;{
+  \&amp;quot;words\&amp;quot;: [
+    \&amp;quot;requin\&amp;quot;,
+    \&amp;quot;poisson\&amp;quot;
+  ]
+}&amp;quot; &amp;quot;http://localhost:3000/api/WordLists&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The response body :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;id&amp;quot;: &amp;quot;56f58cc02dd5c18421bf03e5&amp;quot;,
+  &amp;quot;words&amp;quot;: [
+    &amp;quot;requin&amp;quot;,
+    &amp;quot;poisson&amp;quot;
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I did a check on the mongoDB command line :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;C:\dev\learn&amp;gt;mongo
+MongoDB shell version: 3.2.0
+connecting to: test
+&amp;gt; use learn_db
+switched to db learn_db
+&amp;gt; db.WordList.find()
+{ &amp;quot;_id&amp;quot; : ObjectId(&amp;quot;56f58cc02dd5c18421bf03e5&amp;quot;), &amp;quot;words&amp;quot; : [ &amp;quot;requin&amp;quot;, &amp;quot;poisson&amp;quot; ] }
+&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;next-step:d7c6f0a1214af8e314776c1ec13f091e&#34;&gt;Next step&lt;/h2&gt;
+
+&lt;p&gt;I found the exercise really easy to do and didn&amp;rsquo;t have to write much code to do this.  The next
+step will be to add some security to this API.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Can the loopback opensource framework still live now that IBM as bought Strongloop?</title>
